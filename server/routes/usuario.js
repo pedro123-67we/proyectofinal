@@ -1,9 +1,6 @@
 const express = require('express');
+const Usuario = require('../models/usuario');
 const app = express();
-
-/*app.get('/', function(req, res){
-    res.send('<h1>Bienvenido a mi servidor REST (localhost)</h1>');
-});*/
 
 app.get('/usuario', function(req, res){
     res.json({
@@ -13,22 +10,40 @@ app.get('/usuario', function(req, res){
 });
 
 app.post('/usuario', function(req, res){
-    let nombre = req.body.nombre;
     let body = req.body;
+    let Usr = new Usuario({
+        nombre: body.nombre,
+        email: body.email, 
+        password: body.password
+    });
 
-    if(nombre === undefined){
+    Usr.save((err, usrDB) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Ocurrio un error', 
+                err
+            });
+        }
+        res.json({
+            ok: true,
+            msg: 'Usiaro insertado con exito',
+            usrDB
+        });
+    });
+
+   /* if(nombre === undefined){
         res.status(400).json({
             ok: 400,
             mensaje: 'Favor de enviar el valor del nombre'
         });
     }else{
-
         res.json({
             ok: 200 ,
             mensaje: 'usuario insertado con exito',
             body: body
         });
-    }
+    }*/
 });
 
 app.put('/usuario/:id/:nombre', function(req, res){

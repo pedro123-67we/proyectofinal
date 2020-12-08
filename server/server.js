@@ -17,7 +17,7 @@ app.get('/', function (req, res) {
 app.use(require('./routes/usuario'));
 app.use(require('./routes/categoria'));
 app.use(require('./routes/login'));
-//app.use(require('./routes/producto'));
+app.use(require('./routes/productos'));
 
 mongoose.connect('mongodb+srv://admin:d99e17b2@cluster0.qvzti.mongodb.net/cafeteria', {
   useNewUrlParser: true, 

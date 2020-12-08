@@ -107,6 +107,6 @@ const app = express();
                             usrDB
                         }); 
              });
-    });
+    }); 
 
     module.exports = app;

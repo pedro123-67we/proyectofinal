@@ -5,18 +5,18 @@ const app = express();
 const Categoria = require('../models/categoria');
 
 app.get('/categoria', (req, res) => {
-    let desde= req.query.desde || 0;
+    let desde = req.query.desde || 0;
     let hasta = req.query.hasta || 5;
 
     Categoria.find({})
     .skip(Number(desde))
     .limit(Number(hasta))
-    .populate('usuario', 'nombre email ')
-    .exec((err, categorias) => {
-        if( err){
+    .populate('usuario', 'nombre email')
+    .exec((err, categorias) =>{
+        if(err){
             return res.status(400).json({
                 ok: false,
-                msg:'Ocurrio un error al listar las categorias',
+                msg: 'Ocurrio un error al listar las categorias',
                 err
             });
         }
@@ -29,66 +29,68 @@ app.get('/categoria', (req, res) => {
     });
 });
 
-app.post('/categoria', (req, res) =>{
+app.post('/categoria', (req, res) => {
     let cat = new Categoria({
         descripcion: req.body.descripcion,
         usuario: req.body.usuario
     });
 
-    cat.save((err, catDB) => {
+    cat.save((err, catDB) =>{
         if(err){
             return res.status(400).json({
-                ok: false, 
-                msg: "Error al insertar una categoria",
+                ok: false,
+                msg: 'Error al insertar una categoria',
                 err
             });
         }
         res.json({
             ok: true,
-            msg:'Categroia insertada con exito',
+            msg: 'Categoria insertda con exito',
             catDB
         });
     });
 });
 
 app.put('/categoria/:id', (req, res) => {
-    let id = req.params.id;
+    let id= req.params.id;
     let body = _.pick(req.body, ['descripcion', 'usuario']);
 
-    Categoria.findByIdAndUpdate(id, body, {new: true, runValidators: true, context: 'query'}, (err, catDB) =>{
-        if(err){
-            return res.status(400).json({
+    Categoria.findByIdAndUpdate(id, body, 
+        {new: true, runValidators: true, context: 'query'}, (err, catDB) => {
+           if(err){
+               return res. status(400).json({
                 ok: false,
-                msg:'Ocurrio un error al momento de actualizar',
+                msg: 'Ocurrio un error al actualizar',
                 err
-            });
-        }
-        res.json({
+               });
+           }
+
+          res.json({
             ok: true,
-            msg: 'La categoria fue actualizada con exito',
+            msg: 'La categoria fue actulizada con exito',
             catDB
+          });
         });
-    });
 });
 
-app.delete('/categoria/:id', (req,res) => {
-    let id = req.params.id;
-    
-    categoria.findByIdAndRemove(id, {context: 'query'}, (err, catDB) =>{
-        if(err){
-            return res.status(400).json({
-                ok: false,
-                msg:'Ocurrio un error al momento de eliminar',
-                err
-            });
-        }
-        res.json({
-            ok: true,
-            msg: 'La categoria fue eliminada con exito',
-            catDB
-        });
+app.delete('/categoria/:id', (req, res) => {
+    let id= req.params.id;
+
+    Categoria.findByIdAndRemove(id, { context: 'query' }, (err, catDB) =>{
+      if (err){
+          return res.status(400).json({
+              ok: false,
+              msg: 'Ocurrio un error al elimir Categoria',
+              err
+          });
+      }  
+
+      res.json({
+        ok: true,
+        msg: 'La categoria fue eliminada con exito',
+        catDB
+      });
     });
 });
-
 
 module.exports = app;

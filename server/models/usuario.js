@@ -1,11 +1,11 @@
-const mongoose = require('mongoose');
+const mongoose = require ('mongoose');
 
 let Schema = mongoose.Schema;
 
 let usuarioSchema = new Schema({
     nombre: {
-        type: String, 
-        required: [true, 'El nombre es necesario']
+        type: String,
+        required: [true, 'El nombre es necesario' ]
     },
     email: {
         type: String,
@@ -14,24 +14,24 @@ let usuarioSchema = new Schema({
     },
     password: {
         type: String,
-        required: [true, 'L a contraseña es necesaria']
+        required: [true, 'La contraseña es necesaria']
     },
     img: {
         type: String,
-        required: false 
+        required: false
     },
     role: {
-        type: String,
+        type: String, 
         default: 'USER_ROLE'
     },
     estado: {
-        type: Boolean, 
+        type: Boolean,
         default: true
     },
     google: {
-        type: Boolean, 
-        default: false 
+        type: Boolean,
+        default: false
     }
 });
+module.exports = mongoose. model('Usuario', usuarioSchema);
 
-module.exports = mongoose.model('Usuario', usuarioSchema);

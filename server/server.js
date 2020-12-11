@@ -2,7 +2,9 @@ require ('./config/config');
 const express = require('express');
 const mongoose = require('mongoose');
 const  bodyParser = require('body-parser');
+const cors = require('cors');
 const app = express();
+
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -10,6 +12,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json 
 app.use(bodyParser.json())
 
+// Habilitar CORS
+app.use(cors());
 app.get('/', function (req, res) {
     res.send('<h1> Bienvenido a mi servidor REST (localhost) </h1>');
 });

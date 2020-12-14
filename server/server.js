@@ -14,6 +14,8 @@ app.use(bodyParser.json())
 
 // Habilitar CORS
 app.use(cors()) ;
+'Access-Control-Allow-Origin', '*'
+'Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT'
 app.get('/', function (req, res) {
     res.send('<h1> Bienvenido a mi servidor REST (localhost) </h1>');
 });
